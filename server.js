@@ -31,7 +31,6 @@ const secret = crypto.randomBytes(32).toString('hex');
 console.log(secret);
 
 const jwt = require('jsonwebtoken');
-const { expressjwt } = require("express-jwt");
 
 const cors = require('cors');
 app.use(cors(
@@ -42,7 +41,7 @@ app.use(cors(
 ));
 
 app.use('/uploads', express.static('uploads'));
-
+const recentUploads = [];
 app.post('/register', async (req, res) => {
     const { name, email, password } = req.body;
 
@@ -229,14 +228,22 @@ app.put('/user/:id', async (req, res) => {
     }
 });
 app.post('/upload', upload.single('image'), (req, res) => {
-    console.log(req.file);
-    res.json({imageUrl: `http://localhost:3001/uploads/${req.file.filename}`});
+    const imageUrl = `http://localhost:3001/uploads/${req.file.filename}`;
+    recentUploads.push(imageUrl);  // Save the image URL in our in-memory array
+    res.json({imageUrl: imageUrl});
 });
 
-app.get('/uploads', (req, res) => {
-        console.log(req.file);
-        return res.json({imageUrl: `http://localhost:3001/uploads/${req.file.filename}`});
+app.get('/lastUpload', (req, res) => {
+    // Get the most recent upload
+    const lastUpload = recentUploads[recentUploads.length - 1];
+
+    if (lastUpload) {
+        res.json({imageUrl: lastUpload});
+    } else {
+        res.status(404).send("No images uploaded yet");
+    }
 });
+
 // Rota para obter todos os filmes
 app.get('/film', async (req, res) => {
     try {
