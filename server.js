@@ -68,29 +68,38 @@ app.post('/register', async (req, res) => {
         res.status(500).send({ message: "Erro ao registrar usuário", error });
     }
 });
-
 app.post('/user', async (req, res) => {
     const { name, email, password, avatar } = req.body;
+
+    if (!name || !email || !password) {
+        return res.status(400).send({ message: "Name, email, and password are required!" });
+    }
+
     if (!emailRegex.test(email)) {
         return res.status(400).send({ message: "E-mail inválido!" });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10); // 10 é o número de rounds de salting
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     try {
-        await knexInstance('users').insert({
+        const [userId] = await knexInstance('users').insert({
             name,
             email,
             password: hashedPassword,
             avatar,
-            created_at: new Date(),
-            updated_at: new Date()
-        });
-        res.status(201).send({ message: "Usuário criado com sucesso!" });
+            created_at: knexInstance.fn.now(),
+            updated_at: knexInstance.fn.now(),
+        }).returning('id');
+
+        res.status(201).send({ message: "Usuário criado com sucesso!", userId });
     } catch (error) {
+        if (error.code === '23505') { // 23505 is unique violation in PostgreSQL, adjust if using a different DB
+            return res.status(400).send({ message: "E-mail já está em uso." });
+        }
         res.status(500).send({ message: "Erro ao criar usuário", error });
     }
 });
+
 app.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
@@ -129,8 +138,8 @@ app.post('/film', async (req, res) => {
             description,
             nota,
             users_id,
-            created_at: new Date(),
-            updated_at: new Date()
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString()
         });
         res.status(201).send({ message: "Filme adicionado com sucesso!" });
     } catch (error) {
@@ -138,7 +147,33 @@ app.post('/film', async (req, res) => {
     }
 });
 
-// Rota para adicionar tag
+app.put('/film/:id', async (req, res) => {
+    const { id } = req.params;
+    const { title, description, nota } = req.body;
+
+    try {
+        const film = await knexInstance('films').where({ id }).first();
+
+        if (!film) {
+            return res.status(404).send({ message: "Filme não encontrado." });
+        }
+
+        await knexInstance('films')
+                .where({ id })
+                .update({
+                    title: title || film.title,
+                    description: description || film.description,
+                    nota: nota || film.nota
+                });
+
+            return res.status(200).send({ message: "Filme atualizado com sucesso!" });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send({ message: "Erro ao alterar filme." });
+    }
+});
+
+//Rota para adicionar tag
 app.post('/tag', async (req, res) => {
     const { name, film_id, users_id } = req.body;
 
@@ -234,14 +269,16 @@ app.post('/upload', upload.single('image'), (req, res) => {
 });
 
 app.get('/lastUpload', (req, res) => {
-    // Get the most recent upload
-    const lastUpload = recentUploads[recentUploads.length - 1];
 
-    if (lastUpload) {
-        res.json({imageUrl: lastUpload});
-    } else {
-        res.status(404).send("No images uploaded yet");
-    }
+   try{
+       const lastUpload = recentUploads[recentUploads.length - 1];
+
+       if (lastUpload) {
+           res.json({imageUrl: lastUpload});
+       }
+   }catch (e) {
+        res.status(404).send("Sem imagens ainda.");
+   }
 });
 
 // Rota para obter todos os filmes
@@ -305,6 +342,15 @@ app.delete('/film/:id', async (req, res) => {
     }
 });
 
+app.delete('/film', async (req, res) => {
+    try {
+        await knexInstance('films').delete();
+        res.status(200).send({ message: "Filmes excluídos com sucesso!" });
+    } catch (error) {
+        res.status(500).send({ message: "Erro ao excluir filmes", error });
+    }
+});
+
 app.delete('/user/:id', async (req, res) => {
     const { id } = req.params;
 
@@ -313,6 +359,17 @@ app.delete('/user/:id', async (req, res) => {
         res.status(200).send({ message: "Usuário excluído com sucesso!" });
     } catch (error) {
         res.status(500).send({ message: "Erro ao excluir usuário", error });
+    }
+});
+
+app.delete('/tag/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        await knexInstance('tags').where({ id }).delete();
+        res.status(200).send({ message: "Tag excluída com sucesso!" });
+    } catch (error) {
+        res.status(500).send({ message: "Erro ao excluir tag", error });
     }
 });
 
