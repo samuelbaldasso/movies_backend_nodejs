@@ -37,7 +37,7 @@ const photoRoutes = require('./routes/photoRoutes');
 const userRoutes = require('./routes/userRoutes');
 const tagRoutes = require('./routes/tagRoutes');
 
-app.use('/uploads', express.static('uploads'));
+app.use('/uploads', express.static("uploads"));
 
 app.use('/auth', authRoutes);
 app.use('/film', filmRoutes);
