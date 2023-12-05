@@ -22,7 +22,7 @@ app.use(bodyParser.json());
 const cors = require('cors');
 app.use(cors(
     {
-        origin: 'https://gleaming-gecko-a150c9.netlify.app/',
+        origin: 'http://localhost:3000',
         allowedHeaders: ['Content-Type', 'Authorization']
     }
 ));
