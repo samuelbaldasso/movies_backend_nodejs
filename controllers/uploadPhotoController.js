@@ -11,7 +11,7 @@ fs.readdir(uploadDirectory, (err, files) => {
     return;
   }
   files.forEach((file) => {
-    const imageUrl = `http://localhost:3001/uploads/${file}`;
+    const imageUrl = `https://movies-backend-nodejs-2.onrender.com/uploads/${file}`;
     recentUploads.push(imageUrl);
   });
   console.log('Initialized recentUploads with existing images:', recentUploads);
@@ -21,7 +21,7 @@ exports.postUpload = (req, res) => {
   if (!req.file) {
     return res.status(400).json({ error: "No file provided" });
   }
-  const imageUrl = `http://localhost:3001/uploads/${req.file.filename}`;
+  const imageUrl = `https://movies-backend-nodejs-2.onrender.com/uploads/${req.file.filename}`;
   recentUploads.push(imageUrl); // Save the image URL in our in-memory array
   res.json({ imageUrl: imageUrl });
 };
