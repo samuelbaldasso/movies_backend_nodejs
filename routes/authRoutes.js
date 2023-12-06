@@ -5,7 +5,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /login:
+ * /auth/login:
  *   post:
  *     summary: Retorna a autenticação de um usuário já registrado via token JWT
  *     responses:
@@ -15,7 +15,7 @@ const router = express.Router();
 router.post('/login', authController.login);
 /**
  * @swagger
- * /register:
+ * /auth/register:
  *   post:
  *     summary: Retorna o cadastro de um usuário
  *     responses:

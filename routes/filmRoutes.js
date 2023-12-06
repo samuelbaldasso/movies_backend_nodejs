@@ -5,7 +5,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /film:
+ * /film/film:
  *   post:
  *     summary: Retorna a criação de um novo item de filme
  *     responses:
@@ -15,7 +15,7 @@ const router = express.Router();
 router.post('/film', filmController.postFilm);
 /**
  * @swagger
- * /film:
+ * /film/film:
  *   get:
  *     summary: Retorna a lista de todos os filmes já registrados
  *     responses:
@@ -25,7 +25,7 @@ router.post('/film', filmController.postFilm);
 router.get('/film', filmController.getFilms);
 /**
  * @swagger
- * /film/:id:
+ * /film/film/:id:
  *   get:
  *     summary: Retorna um filme pelo seu identificador numérico
  *     responses:
@@ -35,7 +35,7 @@ router.get('/film', filmController.getFilms);
 router.get('/film/:id', filmController.getFilm);
 /**
  * @swagger
- * /film/:id:
+ * /film/film/:id:
  *   delete:
  *     summary: Retorna a exclusão de um filme pelo seu identificador numérico
  *     responses:
@@ -45,7 +45,7 @@ router.get('/film/:id', filmController.getFilm);
 router.delete('/film/:id',filmController.deleteFilm);
 /**
  * @swagger
- * /film:
+ * /film/film:
  *   delete:
  *     summary: Retorna a exclusão de todos os filmes caso desejar (deve ser usado somente em ambiente de desenvolvimento)
  *     responses:
@@ -55,7 +55,7 @@ router.delete('/film/:id',filmController.deleteFilm);
 router.delete('/film',filmController.deleteFilms);
 /**
  * @swagger
- * /film/:id:
+ * /film/film/:id:
  *   put:
  *     summary: Retorna a atualização de um item de filme
  *     responses:

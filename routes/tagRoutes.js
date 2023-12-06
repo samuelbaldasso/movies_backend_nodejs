@@ -4,7 +4,7 @@ const tagController = require('../controllers/tagController');
 const router = express.Router();
 /**
  * @swagger
- * /tag:
+ * /tag/tag:
  *   post:
  *     summary: Retorna o registro de uma tag (no caso, uma palavra ou descrição breve sobre características do item de filme e / ou interesses do usuário em relação ao filme).
  *     responses:
@@ -14,7 +14,7 @@ const router = express.Router();
 router.post('/tag', tagController.postTag);
 /**
  * @swagger
- * /tag:
+ * /tag/tag:
  *   get:
  *     summary: Retorna uma lista de todas as tags registradas.
  *     responses:
@@ -24,7 +24,7 @@ router.post('/tag', tagController.postTag);
 router.get('/tag', tagController.getTags);
 /**
  * @swagger
- * /tag/:id:
+ * /tag/tag/:id:
  *   get:
  *     summary: Retorna uma tag de acordo com seu identificador numérico.
  *     responses:
@@ -34,7 +34,7 @@ router.get('/tag', tagController.getTags);
 router.get('/tag/:id', tagController.getTag);
 /**
  * @swagger
- * /tag/:id:
+ * /tag/tag/:id:
  *   delete:
  *     summary: Deleta uma tag de acordo com seu identificador numérico.
  *     responses:
