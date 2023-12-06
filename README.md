@@ -22,19 +22,11 @@ A documentação completa das API's está disponível no endpoint `/api-docs`. A
 
 ## Instruções de Instalação e Uso
 
-1. Clone o repositório:
+1. Clone o repositório: git clone [URL_DO_REPOSITORIO].
 
-git clone [URL_DO_REPOSITORIO]
+2. Navegue até a pasta do projeto e instale as dependências: cd [NOME_DA_PASTA_DO_PROJETO] e depois rodar o comando npm install.
 
-2. Navegue até a pasta do projeto e instale as dependências:
-
-cd [NOME_DA_PASTA_DO_PROJETO]
-
-npm install
-
-3. Inicie o servidor:
-
-nodemon server.js
+3. Inicie o servidor: nodemon server.js.
 
 4. Acesse `http://localhost:3001/api-docs` em seu navegador para visualizar a documentação da API.
 
