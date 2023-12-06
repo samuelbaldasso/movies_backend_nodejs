@@ -4,6 +4,9 @@ const knex = require('knex');
 const knexInstance = knex(require('./knexfile'));
 knexInstance.raw('PRAGMA foreign_keys = ON');
 
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./controllers/apiDocController');
+
 const multer = require('multer');
 const path = require('path');
 
@@ -38,7 +41,7 @@ const userRoutes = require('./routes/userRoutes');
 const tagRoutes = require('./routes/tagRoutes');
 
 app.use('/uploads', express.static("uploads"));
-
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/auth', authRoutes);
 app.use('/film', filmRoutes);
 app.use(upload.single('image'), photoRoutes);
