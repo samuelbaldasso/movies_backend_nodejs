@@ -29,6 +29,7 @@ git clone [URL_DO_REPOSITORIO]
 2. Navegue até a pasta do projeto e instale as dependências:
 
 cd [NOME_DA_PASTA_DO_PROJETO]
+
 npm install
 
 3. Inicie o servidor:
