@@ -6,7 +6,7 @@ const router = express.Router();
  * @swagger
  * /user/user:
  *   post:
- *     summary: Ideal para administradores do sistema e para ambientes de desenvolvimento, esta API servirá para controle dos usuários no sistema, podendo-se cadastrar um usuário.
+ *     summary: Retorna o cadastro de um usuário.
  *     responses:
  *       200:
  *         description: Cadastro de usuário bem sucedido
@@ -16,7 +16,7 @@ router.post('/user', userController.postUser);
  * @swagger
  * /user/user/:id:
  *   delete:
- *     summary: Ideal para administradores do sistema e para ambientes de desenvolvimento, esta API servirá para retornar a exclusão de um usuário.
+ *     summary: Retorna a exclusão de um usuário.
  *     responses:
  *       200:
  *         description: Exclusão de usuário bem sucedido

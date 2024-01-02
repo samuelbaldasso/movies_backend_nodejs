@@ -45,16 +45,6 @@ router.get('/film/:id', filmController.getFilm);
 router.delete('/film/:id',filmController.deleteFilm);
 /**
  * @swagger
- * /film/film:
- *   delete:
- *     summary: Retorna a exclusão de todos os filmes caso desejar (deve ser usado somente em ambiente de desenvolvimento)
- *     responses:
- *       200:
- *         description: Exclusão de filmes bem sucedida
- */
-router.delete('/film',filmController.deleteFilms);
-/**
- * @swagger
  * /film/film/:id:
  *   put:
  *     summary: Retorna a atualização de um item de filme

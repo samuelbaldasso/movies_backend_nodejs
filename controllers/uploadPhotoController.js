@@ -3,7 +3,6 @@ const path = require("path");
 
 const recentUploads = [];
 
-// Scan the /uploads directory and add image URLs to recentUploads
 const uploadDirectory = path.join(__dirname, '../uploads');
 fs.readdir(uploadDirectory, (err, files) => {
   if (err) {
@@ -22,7 +21,7 @@ exports.postUpload = (req, res) => {
     return res.status(400).json({ error: "No file provided" });
   }
   const imageUrl = `http://localhost:3001/uploads/${req.file.filename}`;
-  recentUploads.push(imageUrl); // Save the image URL in our in-memory array
+  recentUploads.push(imageUrl);
   res.json({ imageUrl: imageUrl });
 };
 

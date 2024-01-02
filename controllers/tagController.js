@@ -26,7 +26,6 @@ exports.getTags = async (req, res) => {
     }
 };
 
-// Rota para obter uma tag específica pelo ID
 exports.getTag = async (req, res) => {
     const { id } = req.params;
     try {

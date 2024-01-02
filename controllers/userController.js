@@ -62,7 +62,7 @@ exports.getUser = async (req, res) => {
 
 exports.putUser = async (req, res) => {
     const { id } = req.params;
-    const { name, email, actualPassword, password } = req.body;
+    const { name, email, actualPassword, password, avatar } = req.body;
 
     try {
         const user = await knexInstance('users').where({ id }).first();
@@ -87,6 +87,7 @@ exports.putUser = async (req, res) => {
                     password: hashedPassword,
                     name: name || user.name,
                     email: email || user.email,
+                    avatar: avatar || user.avatar
                 });
 
             return res.status(200).send({ message: "Usuário atualizado com sucesso!" });
@@ -96,8 +97,9 @@ exports.putUser = async (req, res) => {
             await knexInstance('users')
                 .where({ id })
                 .update({
-                    name: name || user.name,  // If name is provided, update it. Otherwise, keep the old value.
+                    name: name || user.name,  
                     email: email || user.email,
+                    avatar: avatar || user.avatar
                 });
 
             return res.status(200).send({ message: "Usuário atualizado com sucesso!" });

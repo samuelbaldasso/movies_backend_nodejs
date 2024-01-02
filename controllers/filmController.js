@@ -80,12 +80,3 @@ exports.deleteFilm = async (req, res) => {
         res.status(500).send({ message: "Erro ao excluir filme", error });
     }
 };
-
-exports.deleteFilms = async (req, res) => {
-    try {
-        await knexInstance('films').delete();
-        res.status(200).send({ message: "Filmes excluídos com sucesso!" });
-    } catch (error) {
-        res.status(500).send({ message: "Erro ao excluir filmes", error });
-    }
-};

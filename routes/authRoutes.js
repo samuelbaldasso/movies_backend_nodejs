@@ -13,15 +13,5 @@ const router = express.Router();
  *         description: Login bem sucedido
  */
 router.post('/login', authController.login);
-/**
- * @swagger
- * /auth/register:
- *   post:
- *     summary: Retorna o cadastro de um usuário
- *     responses:
- *       200:
- *         description: Registro bem sucedido
- */
-router.post('/register', authController.register);
 
 module.exports = router;
