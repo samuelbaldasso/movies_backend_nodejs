@@ -23,7 +23,3 @@ A documentação completa das API's está disponível no endpoint `/api-docs`. A
 ---
 
 Desenvolvido com ❤️ por Samuel Baldasso
-
-PS: O projeto estará também em ambiente de produção no link abaixo:
-
-https://movies-backend-nodejs-2.onrender.com
