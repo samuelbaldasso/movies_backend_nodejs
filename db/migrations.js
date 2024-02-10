@@ -21,12 +21,6 @@ knexInstance.schema
         table.date('created_at');
         table.date('updated_at');
     })
-    .createTable('tags', (table) => {
-        table.increments('id');
-        table.string('name').notNullable();
-        table.integer('film_id').references('id').inTable('films').notNullable().onDelete('CASCADE');
-        table.integer('users_id').references('id').inTable('users').notNullable();
-    })
     .then(() => {
         console.log('Tabelas criadas');
         process.exit(0);
